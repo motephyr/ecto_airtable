@@ -23,7 +23,7 @@ defmodule EctoAirtable.Mixfile do
     [
       {:ecto, "~> 2.1.4"},
       {:tesla, github: "teamon/tesla"},
-      {:hackney, "~> 1.9.0"},
+      {:hackney, "~> 1.9"},
       {:poison, "~> 2.0"},
 
       {:mix_test_watch, "~> 0.5.0", only: :dev}
