@@ -3,10 +3,13 @@ defmodule Ecto.Adapters.Airtable.Query do
     %{
       "filterByFormula" => where(query, params),
       "fields" => fields(names),
-      "limit" => limit(query)
+      "limit" => limit(query),
+      "offset" => offset(params)
     }
     |> Enum.filter(fn {_,v} -> v end)
   end
+  def offset(params), do: Keyword.get(params, :offset)
+  def offset(_), do: nil
 
   def limit(%Ecto.Query{limit: %Ecto.Query.QueryExpr{expr: expr}}), do: expr(expr, [])
   def limit(_), do: nil

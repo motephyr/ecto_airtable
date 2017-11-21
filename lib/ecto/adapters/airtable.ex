@@ -124,9 +124,19 @@ defmodule Ecto.Adapters.Airtable do
   def execute(_repo,  %{fields: fields, sources: {{table, _schema}}},
                       {:nocache, {:all, query}},
                       params, mapper, _opts) do
-    {:ok, records} = Connection.all(table, Query.params(query, fields, params))
-    results = Enum.map(records, &convert(&1, fields, mapper))
-    {length(results), results}
+        call_next_request([], table, query, fields, params, mapper)
+  end
+
+  def call_next_request(sum_result, table, query, fields, params, mapper) do
+    case Connection.all(table, Query.params(query, fields, params)) do
+      {:ok, records, offset} ->
+        results = Enum.map(records, &convert(&1, fields, mapper))
+        call_next_request(sum_result ++ results, table, query, fields, params |> Keyword.put(:offset, offset), mapper)
+      {:ok, records} ->
+        results = Enum.map(records, &convert(&1, fields, mapper))
+        all_result = sum_result ++ results
+        {length(all_result), all_result}     
+    end
   end
 
   defp convert(record, [{:&, [], [0, fields, _]} = fd], mapper) do

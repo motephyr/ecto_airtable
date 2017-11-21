@@ -14,6 +14,7 @@ defmodule Ecto.Adapters.Airtable.Client do
 
   def all(client, table, query) do
     case get(client, table, query: query) do
+      %{status: 200, body: %{"records" => records, "offset" => offset}} -> {:ok, records, offset}      
       %{status: 200, body: %{"records" => records}} -> {:ok, records}
       env -> {:error, env}
     end
