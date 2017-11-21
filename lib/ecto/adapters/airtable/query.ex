@@ -135,7 +135,6 @@ defmodule Ecto.Adapters.Airtable.Query do
     key
     |> to_string
     |> String.split("_")
-    |> Enum.map(&String.capitalize/1)
     |> Enum.join(" ")
   end
 end
