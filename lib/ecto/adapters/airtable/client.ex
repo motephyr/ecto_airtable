@@ -7,7 +7,8 @@ defmodule Ecto.Adapters.Airtable.Client do
   def new(base, api_key) do
     Tesla.build_client [
       {Tesla.Middleware.BaseUrl, "https://api.airtable.com/v0/#{base}/"},
-      {Tesla.Middleware.Headers, %{"Authorization" => "Bearer #{api_key}"}}
+      {Tesla.Middleware.Headers, %{"Authorization" => "Bearer #{api_key}"}},
+      {Tesla.Middleware.Timeout, timeout: 10_000}
     ]
   end
 
