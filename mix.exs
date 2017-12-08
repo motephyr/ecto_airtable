@@ -21,7 +21,7 @@ defmodule EctoAirtable.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ecto, "~> 2.1.4"},
+      {:ecto, "~> 2.1.6"},
       {:tesla, github: "teamon/tesla"},
       {:hackney, "~> 1.9"},
       {:poison, "~> 3.0"},
